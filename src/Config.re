@@ -1,0 +1,1 @@
+let actionHistoryLimit = 50;

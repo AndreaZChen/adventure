@@ -20,8 +20,9 @@
   "suffix": ".bs.js",
   "namespace": true,
   "bs-dependencies": [
+    "bs-css",
     "reason-react",
-    "bs-css"
+    "reason-react-update"
   ],
   "refmt": 3
 }

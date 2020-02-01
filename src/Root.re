@@ -1,4 +1,10 @@
 [@react.component]
 let make = () => {
-  <span> {React.string("Testing!")} </span>;
+  let globalStateAndDispatch =
+    ReactUpdate.useReducer(GlobalState.initialState, GlobalState.reducer);
+
+  <GlobalState.Provider value=globalStateAndDispatch>
+    <Scene />
+    <Input />
+  </GlobalState.Provider>;
 };
