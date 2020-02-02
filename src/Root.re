@@ -27,10 +27,18 @@ module Styles = {
   global("body", [fontFamily("Lato")]);
 };
 
+let initialState: GlobalState.t = {
+  currentCommandReducer: InitialScene.reducer,
+  currentActionInputFieldValue: "",
+  actionHistory: [],
+  redoActionHistory: [],
+  narrationHistory: [InitialScene.initialNarrationElement],
+};
+
 [@react.component]
 let make = () => {
   let globalStateAndDispatch =
-    ReactUpdate.useReducer(GlobalState.initialState, GlobalState.reducer);
+    ReactUpdate.useReducer(initialState, GlobalState.reducer);
 
   <GlobalState.Provider value=globalStateAndDispatch>
     <div className=Styles.rootWrapper>

@@ -18,3 +18,7 @@ let fromString = string => {
   | [] => {character: None, action: "", arguments: []}
   };
 };
+
+module Defaults = {
+  let help = {character: None, action: "help", arguments: []};
+};

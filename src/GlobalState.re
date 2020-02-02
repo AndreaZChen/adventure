@@ -1,13 +1,15 @@
-type t = {
-  currentScene: Scene.t,
-  currentActionInputFieldValue: string,
-  actionHistory: list(string),
-  narrationHistory: list(string),
-};
-
 type action =
   | ActionSent
-  | ActionInputFieldUpdated(string);
+  | ActionInputFieldUpdated(string)
+  | CommandTextClicked(Command.t);
+
+type t = {
+  currentCommandReducer: (Command.t, t) => t,
+  currentActionInputFieldValue: string,
+  actionHistory: list(string),
+  redoActionHistory: list(string),
+  narrationHistory: list(React.element),
+};
 
 let reducer = (action: action, state: t) =>
   switch (action) {
@@ -15,12 +17,7 @@ let reducer = (action: action, state: t) =>
     state.currentActionInputFieldValue == ""
       ? ReactUpdate.NoUpdate
       : {
-        let command = Command.fromString(state.currentActionInputFieldValue);
-
-        let actionResult: Scene.actionResult =
-          state.currentScene.getNextSceneFromCommand(command);
-
-        ReactUpdate.Update({
+        let actionUpdatedState = {
           ...state,
           currentActionInputFieldValue: "",
           actionHistory:
@@ -42,29 +39,37 @@ let reducer = (action: action, state: t) =>
           narrationHistory:
             Belt.List.add(
               state.narrationHistory,
-              "> " ++ state.currentActionInputFieldValue,
-            )
-            ->Belt.List.add(
-                switch (actionResult) {
-                | NextScene(nextNarration, _)
-                | SameScene(nextNarration) => nextNarration
-                },
-              ),
-          currentScene:
-            switch (actionResult) {
-            | NextScene(_nextNarration, nextScene) => nextScene
-            | SameScene(_message) => state.currentScene
-            },
-        });
+              React.string("> " ++ state.currentActionInputFieldValue),
+            ),
+        };
+
+        let command = state.currentActionInputFieldValue->Command.fromString;
+
+        state.currentCommandReducer(command, actionUpdatedState)
+        ->ReactUpdate.Update;
       }
+  | CommandTextClicked(command) =>
+    ReactUpdate.Update(state.currentCommandReducer(command, state))
   | ActionInputFieldUpdated(text) =>
     ReactUpdate.Update({...state, currentActionInputFieldValue: text})
   };
 
-let initialState = {
-  currentScene: InitialScene.value,
+let pushNarrationElement = (state: t, narrationElement: React.element) => {
+  ...state,
+  narrationHistory: Belt.List.add(state.narrationHistory, narrationElement),
+};
+
+let pushNarrationString = (state: t, narrationString: string) => {
+  ...state,
+  narrationHistory:
+    Belt.List.add(state.narrationHistory, React.string(narrationString)),
+};
+
+let rec initialState = {
+  currentCommandReducer: (_, _) => initialState,
   currentActionInputFieldValue: "",
   actionHistory: [],
+  redoActionHistory: [],
   narrationHistory: [],
 };
 

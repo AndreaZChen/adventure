@@ -11,12 +11,15 @@ let toString = (character: t) =>
   };
 
 let fromString = string =>
-  switch (string) {
+  switch (string->String.lowercase_ascii) {
   | "stieletta"
+  | "sti"
   | "s" => Some(Stieletta)
   | "anethir"
+  | "an"
   | "a" => Some(Anethir)
   | "jaziel"
+  | "jaze"
   | "j" => Some(Jaziel)
   | _ => None
   };
