@@ -23,6 +23,8 @@ module Styles = {
       width(`percent(80.)),
       height(`percent(80.)),
     ]);
+
+  global("body", [fontFamily("Lato")]);
 };
 
 [@react.component]
