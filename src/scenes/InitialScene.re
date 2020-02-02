@@ -1,9 +1,7 @@
-open Scene;
-
-let value = {
-  getNextSceneFromAction: input =>
-    switch (input) {
-    | "hello" => InvalidAction("Thanks for the greeting!")
-    | _ => InvalidAction("Dunno what that means!")
+let value: Scene.t = {
+  getNextSceneFromCommand: (command: Command.t) =>
+    switch (command.action) {
+    | "hello" => SameScene("Thanks for the greeting!")
+    | _ => SameScene("Dunno what that means!")
     },
 };

@@ -1,4 +1,4 @@
-type t = {getNextSceneFromAction: string => actionResult}
+type t = {getNextSceneFromCommand: Command.t => actionResult}
 and actionResult =
   | NextScene(string, t)
-  | InvalidAction(string);
+  | SameScene(string);
