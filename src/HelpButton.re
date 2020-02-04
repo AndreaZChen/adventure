@@ -1,14 +1,11 @@
 module Styles = {
   open Css;
 
-  let helpButton = merge([
-    style([
-      position(`absolute),
-      zIndex(CommonStyles.dialogZIndex - 1),
-      top(`px(20)),
-      left(`px(20)),
-    ]),
-    CommonStyles.defaultButton,
+  let helpButton = style([
+    position(`absolute),
+    zIndex(CommonStyles.dialogZIndex - 1),
+    top(`px(20)),
+    left(`px(20)),
   ]);
 };
 

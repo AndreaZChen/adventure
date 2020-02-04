@@ -8,7 +8,18 @@ let defaultClickableHoveredTextHex = "DC143C";
 
 let dialogZIndex = 1000;
 
-let defaultButton = style([
+let buttonsArea = style([
+  width(`percent(100.)),
+  display(`flex),
+  justifyContent(`spaceAround),
+  alignItems(`center),
+  borderTop(`px(1), `solid, `hex(defaultBorderHex)),
+  paddingTop(`px(10)),
+  marginTop(`px(10)),
+]);
+
+global("button", [
+  cursor(`pointer),
   paddingTop(`em(0.35)),
   paddingBottom(`em(0.35)),
   paddingLeft(`em(1.2)),
@@ -21,4 +32,13 @@ let defaultButton = style([
     backgroundColor(`hex(defaultBorderHex)),
     color(`hex(defaultBackgroundHex)),
   ]),
-])
+  active([
+    backgroundColor(`hex(defaultBorderHex)),
+    color(`hex(defaultBackgroundHex)),
+  ]),
+]);
+
+global("hr", [
+  borderColor(`hex(defaultBorderHex)),
+  width(`percent(100.)),
+]);

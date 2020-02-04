@@ -1,27 +1,65 @@
-type action =
-  | NextScene;
+type state = {
+  timesSpokenStielettaAnethir: int,
+  timesSpokenAnethirJaziel: int,
+  timesSpokenJazielStieletta: int,
+};
 
-let actionHandler = (~globalDispatch: GlobalState.action => unit, action: action) =>
+let initialState = {
+  timesSpokenStielettaAnethir: 0,
+  timesSpokenAnethirJaziel: 0,
+  timesSpokenJazielStieletta: 0,
+};
+
+type action =
+  | GoNorth
+  | GoEast
+  | GoWest
+  | SpeakStielettaAnethir
+  | SpeakAnethirJaziel
+  | SpeakJazielStieletta;
+
+let actionHandler = (~globalDispatch: GlobalState.action => unit, ~localDispatch, action: action) =>
   switch (action) {
-  | NextScene =>
-    globalDispatch(SceneTransitioned((~globalState, ~globalDispatch) => React.null))
+  | GoNorth =>
+    ();
+  | GoEast =>
+    ();
+  | GoWest =>
+    ();
+  | SpeakStielettaAnethir =>
+    ();
+  | SpeakAnethirJaziel =>
+    ();
+  | SpeakJazielStieletta =>
+    ();
   };
 
 module Component = {
-  let narration =
-{|A fork in the road...|};
+  let narration1 =
+"A fork in the road.
+
+Where to next?";
 
   [@react.component]
   let make = (~globalDispatch: GlobalState.action => unit) => {
-    let actionHandler = React.useCallback1(actionHandler(~globalDispatch), [|globalDispatch|]);
+    let (localState, localDispatch) = React.useState(() => initialState);
 
+    let actionHandler = React.useCallback2(actionHandler(~globalDispatch, ~localDispatch), (globalDispatch, localDispatch));
     <>
-      <FadeInElement fadeInTime=3000>
-        {React.string(narration)}
-      </FadeInElement>
-      <FadeInElement fadeInTime=6000 startFadeInAtPercent=50>
-        <ClickableText onClick={() => actionHandler(NextScene)} text="help" />
-      </FadeInElement>
+      <FadeInDiv fadeInTime=6000>
+        <Text>narration1</Text>
+      </FadeInDiv>
+      <FadeInDiv className=CommonStyles.buttonsArea fadeInTime=12000 startFadeInAt=9000>
+        <button onClick={_ => actionHandler(GoNorth)}>
+          {React.string("Go North")}
+        </button>
+        <button onClick={_ => actionHandler(GoEast)}>
+          {React.string("Go East")}
+        </button>
+        <button onClick={_ => actionHandler(GoWest)}>
+          {React.string("Go West")}
+        </button>
+      </FadeInDiv>
     </>;
   };
 };
