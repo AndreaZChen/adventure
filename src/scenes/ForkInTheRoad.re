@@ -4,16 +4,12 @@ type action =
 let actionHandler = (~globalDispatch: GlobalState.action => unit, action: action) =>
   switch (action) {
   | NextScene =>
-    globalDispatch(SceneTransitioned(ForkInTheRoad.renderer))
+    globalDispatch(SceneTransitioned((~globalState, ~globalDispatch) => React.null))
   };
 
 module Component = {
   let narration =
-{|Three friends are seated around a campfire.
-
-It is nearly nighttime. There's not much to do but go to bed, and yet... none of the three feel eager to sleep.
-
-What will they do now?|};
+{|A fork in the road...|};
 
   [@react.component]
   let make = (~globalDispatch: GlobalState.action => unit) => {

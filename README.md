@@ -4,7 +4,7 @@ When developing:
 
 ```sh
 yarn install
-yarn server
+yarn serve
 # in a new tab
 yarn start
 ```

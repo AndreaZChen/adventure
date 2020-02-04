@@ -19,33 +19,37 @@ module Styles = {
       display(`flex),
       flexDirection(`column),
       alignItems(`center),
-      justifyContent(`flexEnd),
+      justifyContent(`center),
       width(`percent(80.)),
       height(`percent(80.)),
     ]);
 
-  global("body", [fontFamily("Lato")]);
+  global("body", [
+    fontFamily("Lato"),
+    lineHeight(`abs(1.8)),
+    backgroundColor(`hex(CommonStyles.defaultBackgroundHex)),
+  ]);
 };
 
 let initialState: GlobalState.t = {
-  currentCommandReducer: InitialScene.reducer,
-  currentActionInputFieldValue: "",
-  actionHistory: [],
-  redoActionHistory: [],
-  narrationHistory: [InitialScene.initialNarrationElement],
+  currentSceneRenderer: InitialScene.renderer,
+  isShowingHelpDialog: false,
 };
 
 [@react.component]
 let make = () => {
-  let globalStateAndDispatch =
+  let (globalState, globalDispatch) =
     ReactUpdate.useReducer(initialState, GlobalState.reducer);
 
-  <GlobalState.Provider value=globalStateAndDispatch>
-    <div className=Styles.rootWrapper>
-      <div className=Styles.centralColumn>
-        <NarrationDisplay />
-        <Input />
-      </div>
+  let onCloseHelpDialog = React.useCallback1(() => globalDispatch(HelpDialogClosed), [|globalDispatch|]);
+
+  <div className=Styles.rootWrapper>
+    <HelpButton globalDispatch/>
+    <div className=Styles.centralColumn>
+      {globalState.currentSceneRenderer(~globalState, ~globalDispatch)}
     </div>
-  </GlobalState.Provider>;
+    {globalState.isShowingHelpDialog
+      ? <HelpDialog onClose=onCloseHelpDialog />
+      : React.null}
+  </div>
 };
