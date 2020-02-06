@@ -31,15 +31,17 @@ module Styles = {
   ]);
 };
 
-let initialState: GlobalState.t = {
-  currentSceneRenderer: InitialScene.renderer,
-  isShowingHelpDialog: false,
-};
+let getInitialState: unit => GlobalState.t = () =>
+  GlobalState.loadState()
+  ->Belt.Option.getWithDefault({
+    currentSceneId: InitialScene.id,
+    isShowingHelpDialog: false,
+  });
 
 [@react.component]
 let make = () => {
   let (globalState, globalDispatch) =
-    ReactUpdate.useReducer(initialState, GlobalState.reducer);
+    ReactUpdate.useReducer(getInitialState(), GlobalState.reducer);
 
   let centralColumnRef = React.useRef(Js.Nullable.null);
 
@@ -54,11 +56,16 @@ let make = () => {
 
   let onCloseHelpDialog = React.useCallback1(() => globalDispatch(HelpDialogClosed), [|globalDispatch|]);
 
+  let currentSceneRenderer = React.useMemo1(() =>
+    SceneUtils.getSceneRendererById(globalState.currentSceneId),
+    [|globalState.currentSceneId|],
+  );
+
   <div className=Styles.rootWrapper>
     <HelpButton globalDispatch/>
     <ScrollToTopProvider value=scrollToTop>
       <div className=Styles.centralColumn ref={ReactDOMRe.Ref.domRef(centralColumnRef)}>
-        {globalState.currentSceneRenderer(~globalState, ~globalDispatch)}
+        {currentSceneRenderer(~globalState, ~globalDispatch)}
       </div>
     </ScrollToTopProvider>
     {globalState.isShowingHelpDialog

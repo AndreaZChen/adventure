@@ -30,7 +30,7 @@ let make = (~onClose: unit => unit, ~children) => {
   let onClose = React.useCallback1(_ => onClose(), [|onClose|]);
 
   <FadeInDiv fadeInTime=250 className=Styles.overlay onClick=onClose>
-    <div className=Styles.content>
+    <div className=Styles.content onClick=ReactEvent.Synthetic.stopPropagation>
       children
     </div>
   </FadeInDiv>

@@ -1,21 +1,39 @@
-type sceneRenderer =
-  (~globalState: t, ~globalDispatch: action => unit) =>
-  React.element
-and action =
-  | SceneTransitioned(sceneRenderer)
+type action =
+  | SceneTransitioned(string)
   | HelpDialogOpened
-  | HelpDialogClosed
-and t = {
-  currentSceneRenderer: sceneRenderer,
+  | HelpDialogClosed;
+
+type t = {
+  currentSceneId: string,
   isShowingHelpDialog: bool,
+};
+
+let storeState: t => unit = state => {
+  open Dom.Storage;
+  setItem("currentSceneId", state.currentSceneId, localStorage);
+};
+
+let loadState: unit => option(t) = () => {
+  open Dom.Storage;
+  let currentSceneIdOpt = getItem("currentSceneId", localStorage);
+  switch (currentSceneIdOpt) {
+  | Some(currentSceneId) => Some({
+      currentSceneId,
+      isShowingHelpDialog: false,
+    })
+  | None => None
+  };
 };
 
 let reducer = (action: action, state: t) =>
   switch (action) {
-  | SceneTransitioned(newSceneRenderer) =>
-    ReactUpdate.Update({
+  | SceneTransitioned(newSceneId) =>
+    ReactUpdate.UpdateWithSideEffects({
       ...state,
-      currentSceneRenderer: newSceneRenderer,
+      currentSceneId: newSceneId,
+    }, self => {
+      storeState(self.state);
+      None;
     })
   | HelpDialogOpened =>
     ReactUpdate.Update({

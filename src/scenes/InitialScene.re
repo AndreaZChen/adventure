@@ -1,4 +1,4 @@
-
+let id = "initialScene";
 
 type state = {
   charactersSpokenSequence: list(Character.pair),
@@ -39,7 +39,7 @@ let reducer = (~globalDispatch: GlobalState.action => unit, ~scrollToTop: unit =
     })
   | NextScene =>
     ReactUpdate.SideEffects(_self => {
-      globalDispatch(SceneTransitioned(ForestFire.renderer));
+      globalDispatch(SceneTransitioned(ForestFire.id));
       scrollToTop();
       None;
     })
@@ -92,19 +92,19 @@ thinking hard."
       <>
         narration0
         <br />
-        <FadeInDiv fadeInTime=2000>
+        <FadeInDiv fadeInTime=1000>
           narration1
         </FadeInDiv>
         <br />
-        <FadeInDiv fadeInTime=4000 startFadeInAt=2000>
+        <FadeInDiv fadeInTime=1500 startFadeInAt=1000>
           narration2
         </FadeInDiv>
         <br />
-        <FadeInDiv fadeInTime=6000 startFadeInAt=4000>
+        <FadeInDiv fadeInTime=2000 startFadeInAt=1500>
           narration3
         </FadeInDiv>
         <br />
-        <FadeInDiv fadeInTime=8000 startFadeInAt=6000>
+        <FadeInDiv fadeInTime=2500 startFadeInAt=2000>
           narration4
         </FadeInDiv>
       </>;
@@ -179,7 +179,7 @@ They pull out a ballpoint quill from a pocket, and start scribbling more notes i
       | [AnethirJaziel] =>
         <FadeInDiv fadeInTime=2000>
           <Text>
-  {js|Adjusting the final string, Jaziel finally puts his lute down and leans over towards Anethir.
+  {js|Adjusting the final string, Jaziel puts his lute down and leans over towards Anethir.
 
 "So when are you going to share what it is you're working on?" he says, grinning.
 
@@ -209,11 +209,11 @@ They rub the bridge of their nose in frustration.|js}
 
 "You'd think your all-knowing patron would be a little bit more forthcoming with these things," he says, stroking his chin. "Why the cryptic riddles?"
 
-"First of all," Anethir replies, "not necessarily all-knowing. Or at least we don't know that It knows all. Secondly, It might not be intentionally cryptic! Maybe It doesn't even speak our languages! I dunno." They shrug. "It's always been communication through dreams and visions with S-dog, that's just how we roll.
+"First of all," Anethir replies, "not necessarily all-knowing. Or at least we don't know that It knows all. Secondly, It might not be intentionally cryptic! Maybe It doesn't even speak our languages! I dunno." They shrug. "It's always been communication through dreams and visions with D-dog, that's just how we roll."
 
-"S-dog?" says Jaziel, raising an eye-brow.
+"D-dog?" says Jaziel, raising an eye-brow.
 
-"Yeah! You know, the Seeker. S-dog. Big S. 👉👉"
+"Yeah, my patron! You know, Dís. D-dog. Big D. 👉👉"
 
 "Urgh!" Jaziel exclaims, wincing and reflexively covering his ears. "I'm never gonna get used to that."
 
@@ -374,7 +374,7 @@ The voice seems to be coming from everywhere all at once, and the flames quiver 
         </>
       }}
       <br />
-      <FadeInDiv className=CommonStyles.buttonsArea fadeInTime=10000 startFadeInAt=8000>
+      <FadeInDiv className=CommonStyles.buttonsArea fadeInTime=2500 startFadeInAt=2000>
         {localState.charactersSpokenSequence->Belt.List.length < 3
           ? <>
               <button onClick={_ => localDispatch(SpeakAnethirJaziel)}>
@@ -395,5 +395,5 @@ The voice seems to be coming from everywhere all at once, and the flames quiver 
   };
 };
 
-let renderer: GlobalState.sceneRenderer = (~globalState as _, ~globalDispatch) =>
+let renderer = (~globalState as _, ~globalDispatch) =>
   <Component globalDispatch />;

@@ -43,10 +43,6 @@ global("button", [
     backgroundColor(`hex(defaultBorderHex)),
     color(`hex(defaultBackgroundHex)),
   ]),
-  active([
-    backgroundColor(`hex(defaultBorderHex)),
-    color(`hex(defaultBackgroundHex)),
-  ]),
 ]);
 
 global("hr", [
