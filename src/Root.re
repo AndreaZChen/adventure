@@ -3,6 +3,7 @@ module Styles = {
 
   let rootWrapper =
     style([
+      overflow(`hidden),
       position(`absolute),
       display(`flex),
       alignItems(`center),
@@ -16,7 +17,7 @@ module Styles = {
   let centralColumn =
     style([
       overflowX(`hidden),
-      overflowY(`scroll),
+      overflowY(`auto),
       position(`relative),
       display(`flex),
       flexDirection(`column),
@@ -24,19 +25,23 @@ module Styles = {
       height(`percent(80.)),
     ]);
 
-  global("body", [
-    fontFamily("Lato"),
-    lineHeight(`abs(1.8)),
-    backgroundColor(`hex(CommonStyles.defaultBackgroundHex)),
-  ]);
+  global(
+    "body",
+    [
+      fontFamily("Lato"),
+      lineHeight(`abs(1.8)),
+      backgroundColor(`hex(CommonStyles.defaultBackgroundHex)),
+    ],
+  );
 };
 
-let getInitialState: unit => GlobalState.t = () =>
-  GlobalState.loadState()
-  ->Belt.Option.getWithDefault({
-    currentSceneId: InitialScene.id,
-    isShowingHelpDialog: false,
-  });
+let getInitialState: unit => GlobalState.t =
+  () =>
+    GlobalState.loadState()
+    ->Belt.Option.getWithDefault({
+        currentSceneId: InitialScene.id,
+        isShowingHelpDialog: false,
+      });
 
 [@react.component]
 let make = () => {
@@ -45,31 +50,40 @@ let make = () => {
 
   let centralColumnRef = React.useRef(Js.Nullable.null);
 
-  let scrollToTop = React.useCallback1(
-    () =>
-      centralColumnRef
-      ->React.Ref.current
-      ->Js.Nullable.toOption
-      ->Belt.Option.mapWithDefault((), element => Webapi.Dom.Element.setScrollTop(element, 0.)),
-    [|centralColumnRef|],
-  );
+  let scrollToTop =
+    React.useCallback1(
+      () =>
+        centralColumnRef
+        ->React.Ref.current
+        ->Js.Nullable.toOption
+        ->Belt.Option.mapWithDefault((), element =>
+            Webapi.Dom.Element.setScrollTop(element, 0.)
+          ),
+      [|centralColumnRef|],
+    );
 
-  let onCloseHelpDialog = React.useCallback1(() => globalDispatch(HelpDialogClosed), [|globalDispatch|]);
+  let onCloseHelpDialog =
+    React.useCallback1(
+      () => globalDispatch(HelpDialogClosed),
+      [|globalDispatch|],
+    );
 
-  let currentSceneRenderer = React.useMemo1(() =>
-    SceneUtils.getSceneRendererById(globalState.currentSceneId),
-    [|globalState.currentSceneId|],
-  );
+  let currentSceneRenderer =
+    React.useMemo1(
+      () => SceneUtils.getSceneRendererById(globalState.currentSceneId),
+      [|globalState.currentSceneId|],
+    );
 
   <div className=Styles.rootWrapper>
-    <HelpButton globalDispatch/>
+    <HelpButton globalDispatch />
     <ScrollToTopProvider value=scrollToTop>
-      <div className=Styles.centralColumn ref={ReactDOMRe.Ref.domRef(centralColumnRef)}>
+      <div
+        className=Styles.centralColumn
+        ref={ReactDOMRe.Ref.domRef(centralColumnRef)}>
         {currentSceneRenderer(~globalState, ~globalDispatch)}
       </div>
     </ScrollToTopProvider>
     {globalState.isShowingHelpDialog
-      ? <HelpDialog onClose=onCloseHelpDialog />
-      : React.null}
-  </div>
+       ? <HelpDialog onClose=onCloseHelpDialog /> : React.null}
+  </div>;
 };
