@@ -257,7 +257,7 @@ He reaches over to pat Anethir on the head, but Anethir swats his hand away, hav
 
 "—er, unlike An, I have something at stake. It's not just about knowledge for knowledge's sake..."
 
-An awkward silence. The rustling of leaves in the wind and the faint crackling of the fire somehow feel too overwhelmingly loud.|js}
+An awkward silence. The rustling of leaves in the wind and the faint crackling of the fire somehow feel overwhelmingly loud.|js}
           </Text>
         </FadeInDiv>
       | [JazielStieletta] =>
@@ -275,15 +275,17 @@ An awkward silence. The rustling of leaves in the wind and the faint crackling o
 
 "No," says Stieletta tersely.
 
-Jaziel nods, then hefts the lute into his arms with a practiced motion. His fingers lovingly wrap around its neck, and he begins to sing as he plucks its strings:
-
-|js}
+Jaziel nods, then hefts the lute into his arms with a practiced motion. His fingers lovingly wrap around its neck, and he begins to sing as he plucks its strings:|js}
           </Text>
+          <br />
+          <br />
           <Text italicize=true>
 {js|"Hark now, thou art an All Star,
 get thee thy game on,
 mayst thou long play,"|js}
           </Text>
+          <br />
+          <br />
           <Text>
 {js|"Change of heart," Stieletta mutters, without opening her eyes. "I think I would rather meditate in silence tonight."|js}
           </Text>
@@ -295,15 +297,15 @@ mayst thou long play,"|js}
 
 "Spare me," she replies. Still, a very faint smile cracks across her stony face.
 
-"As you wish," he says. Carefully, he puts the lute down on the forest floor, then lies down next to it, crossing his arms behind his head. Above him, the night sky is full of stars, and the full moon shines bright.
+"As you wish," he says. Carefully, he puts the lute down on the forest floor, then lies down next to it, crossing his arms behind his head. Above him, the night sky is full of stars, and the moon shines bright.
 
-"You should try lying down, Stieletta. It's more comfortable "|js}
+"You should try lying down, Stieletta. It's more comfortable |js}
           </Text>
           <Text italicize=true>
 {js|and|js}
           </Text>
           <Text>
-{js| you get to see the stars.
+{js| you get to see the stars."
 
 She says nothing at first. Silence falls over them, save for the soft crackling of the campfire and the occasional rustle from Anethir's notebook as they leaf through it.
 
@@ -320,11 +322,13 @@ She says nothing at first. Silence falls over them, save for the soft crackling 
 Stieletta groans, and finally opens her eyes—just enough to squint disapprovingly at the two of them—as they begin to sing:|js}
           </Text>
           <br />
+          <br />
           <Text italicize=true>
 {js|"'Tis a cool place, and it doth get colder,
 Thou art bundled up now, but wait 'til thou art older,
 Alas! ye meteor men beggeth to differ,"|js}
           </Text>
+          <br />
           <br />
           <Text>
 {js|"Enough!" she finally shrieks, her face red with fury. Then she stands, rising to her full height, reminding the two singers of just how much taller than them she is.
