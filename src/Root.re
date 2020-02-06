@@ -15,11 +15,11 @@ module Styles = {
 
   let centralColumn =
     style([
+      overflowX(`hidden),
+      overflowY(`scroll),
       position(`relative),
       display(`flex),
       flexDirection(`column),
-      alignItems(`center),
-      justifyContent(`center),
       width(`percent(80.)),
       height(`percent(80.)),
     ]);
@@ -41,13 +41,26 @@ let make = () => {
   let (globalState, globalDispatch) =
     ReactUpdate.useReducer(initialState, GlobalState.reducer);
 
+  let centralColumnRef = React.useRef(Js.Nullable.null);
+
+  let scrollToTop = React.useCallback1(
+    () =>
+      centralColumnRef
+      ->React.Ref.current
+      ->Js.Nullable.toOption
+      ->Belt.Option.mapWithDefault((), element => Webapi.Dom.Element.setScrollTop(element, 0.)),
+    [|centralColumnRef|],
+  );
+
   let onCloseHelpDialog = React.useCallback1(() => globalDispatch(HelpDialogClosed), [|globalDispatch|]);
 
   <div className=Styles.rootWrapper>
     <HelpButton globalDispatch/>
-    <div className=Styles.centralColumn>
-      {globalState.currentSceneRenderer(~globalState, ~globalDispatch)}
-    </div>
+    <ScrollToTopProvider value=scrollToTop>
+      <div className=Styles.centralColumn ref={ReactDOMRe.Ref.domRef(centralColumnRef)}>
+        {globalState.currentSceneRenderer(~globalState, ~globalDispatch)}
+      </div>
+    </ScrollToTopProvider>
     {globalState.isShowingHelpDialog
       ? <HelpDialog onClose=onCloseHelpDialog />
       : React.null}

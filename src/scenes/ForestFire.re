@@ -35,11 +35,6 @@ let actionHandler = (~globalDispatch: GlobalState.action => unit, ~localDispatch
   };
 
 module Component = {
-  let narration1 =
-"A fork in the road.
-
-Where to next?";
-
   [@react.component]
   let make = (~globalDispatch: GlobalState.action => unit) => {
     let (localState, localDispatch) = React.useState(() => initialState);
@@ -47,19 +42,19 @@ Where to next?";
     let actionHandler = React.useCallback2(actionHandler(~globalDispatch, ~localDispatch), (globalDispatch, localDispatch));
     <>
       <FadeInDiv fadeInTime=6000>
-        <Text>narration1</Text>
+        <Text>"[To be continued...]"</Text>
       </FadeInDiv>
-      <FadeInDiv className=CommonStyles.buttonsArea fadeInTime=12000 startFadeInAt=9000>
-        <button onClick={_ => actionHandler(GoNorth)}>
-          {React.string("Go North")}
-        </button>
-        <button onClick={_ => actionHandler(GoEast)}>
-          {React.string("Go East")}
-        </button>
-        <button onClick={_ => actionHandler(GoWest)}>
-          {React.string("Go West")}
-        </button>
-      </FadeInDiv>
+      // <FadeInDiv className=CommonStyles.buttonsArea fadeInTime=12000 startFadeInAt=9000>
+      //   <button onClick={_ => actionHandler(GoNorth)}>
+      //     {React.string("Go North")}
+      //   </button>
+      //   <button onClick={_ => actionHandler(GoEast)}>
+      //     {React.string("Go East")}
+      //   </button>
+      //   <button onClick={_ => actionHandler(GoWest)}>
+      //     {React.string("Go West")}
+      //   </button>
+      // </FadeInDiv>
     </>;
   };
 };

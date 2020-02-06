@@ -4,8 +4,8 @@ module Styles = {
   let helpButton = style([
     position(`absolute),
     zIndex(CommonStyles.dialogZIndex - 1),
-    top(`px(20)),
-    left(`px(20)),
+    top(`px(5)),
+    left(`px(5)),
   ]);
 };
 

@@ -21,6 +21,7 @@
   "namespace": true,
   "bs-dependencies": [
     "bs-css",
+    "bs-webapi",
     "reason-react",
     "reason-react-update"
   ],

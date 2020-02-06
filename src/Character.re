@@ -3,9 +3,12 @@ type t =
   | Jaziel
   | Stieletta;
 
-let toString = (character: t) =>
-  switch (character) {
-  | Anethir => "Anethir"
-  | Jaziel => "Jaziel"
-  | Stieletta => "Stieletta"
-  };
+type pair =
+  | StielettaAnethir
+  | AnethirJaziel
+  | JazielStieletta;
+
+module NPC = {
+  type t =
+    | Euporie;
+};
