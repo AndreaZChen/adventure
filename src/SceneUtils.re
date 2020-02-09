@@ -1,6 +1,9 @@
-let getSceneRendererById = id =>
-  switch (id) {
-  | id when id == InitialScene.id => InitialScene.renderer
-  | id when id == ForestFire.id => ForestFire.renderer
-  | _unknownId => InitialScene.renderer
-  };
+let getSceneById: string => (module Interfaces.Scene) =
+  id =>
+    switch (id) {
+    | id when id == InitialScene.Scene.id => (module InitialScene.Scene)
+    | id when id == ForestFire.Scene.id => (module ForestFire.Scene)
+    | id when id == EuporieFirstMeeting.Scene.id =>
+      (module EuporieFirstMeeting.Scene)
+    | _unknownId => (module InitialScene.Scene)
+    };

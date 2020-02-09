@@ -1,18 +1,32 @@
 module Styles = {
   open Css;
 
-  let rootWrapper =
+  let rootWrapper = (~backgroundColorHex) =>
     style([
       overflow(`hidden),
       position(`absolute),
       display(`flex),
       alignItems(`center),
       justifyContent(`center),
+      flexDirection(`column),
       width(`percent(100.)),
       height(`percent(100.)),
       bottom(`px(0)),
       right(`px(0)),
+      background(
+        `linearGradient((
+          `deg(90.),
+          [
+            (`percent(0.), `hex(backgroundColorHex)),
+            (`percent(5.), `hex(CommonStyles.defaultBackgroundHex)),
+            (`percent(95.), `hex(CommonStyles.defaultBackgroundHex)),
+            (`percent(100.), `hex(backgroundColorHex)),
+          ],
+        )),
+      ),
     ]);
+
+  let title = style([padding(`px(15))]);
 
   let centralColumn =
     style([
@@ -39,8 +53,12 @@ let getInitialState: unit => GlobalState.t =
   () =>
     GlobalState.loadState()
     ->Belt.Option.getWithDefault({
-        currentSceneId: InitialScene.id,
+        currentSceneId: InitialScene.Scene.id,
         isShowingHelpDialog: false,
+        isShowingCharacterMenu: false,
+        anethirDamage: 0,
+        jazielDamage: 0,
+        stielettaDamage: 0,
       });
 
 [@react.component]
@@ -68,22 +86,36 @@ let make = () => {
       [|globalDispatch|],
     );
 
-  let currentSceneRenderer =
+  let onCloseCharacterMenu =
+    React.useCallback1(
+      () => globalDispatch(CharacterMenuClosed),
+      [|globalDispatch|],
+    );
+
+  let (module CurrentScene): (module Interfaces.Scene) =
     React.useMemo1(
-      () => SceneUtils.getSceneRendererById(globalState.currentSceneId),
+      () => SceneUtils.getSceneById(globalState.currentSceneId),
       [|globalState.currentSceneId|],
     );
 
-  <div className=Styles.rootWrapper>
+  <div
+    className={Styles.rootWrapper(
+      ~backgroundColorHex=CurrentScene.backgroundColorHex,
+    )}>
     <HelpButton globalDispatch />
+    <CharacterMenuButton globalDispatch />
     <ScrollToTopProvider value=scrollToTop>
+      <h3 className=Styles.title> {React.string(CurrentScene.title)} </h3>
       <div
         className=Styles.centralColumn
         ref={ReactDOMRe.Ref.domRef(centralColumnRef)}>
-        {currentSceneRenderer(~globalState, ~globalDispatch)}
+        {CurrentScene.renderer(~globalState, ~globalDispatch)}
       </div>
     </ScrollToTopProvider>
     {globalState.isShowingHelpDialog
-       ? <HelpDialog onClose=onCloseHelpDialog /> : React.null}
+       ? <HelpDialog onClose=onCloseHelpDialog />
+       : globalState.isShowingCharacterMenu
+           ? <CharacterMenu globalState onClose=onCloseCharacterMenu />
+           : React.null}
   </div>;
 };
