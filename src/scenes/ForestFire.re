@@ -36,6 +36,7 @@ module Scene: Interfaces.Scene = {
             Belt.List.add(state.charactersReactedSequence, Stieletta),
         },
         _self => {
+          globalDispatch(StielettaRecognizeEuporieFirst);
           scrollToTop();
           None;
         },
@@ -187,7 +188,7 @@ With a mad glint in their eye, Anethir runs towards the edge of the clearing, cl
                  {gotBurned
                     ? <>
                         <Text>
-                          {js|Anethir reaches out, sticking their litte gnome hand into the flames—
+                          {js|Anethir reaches out, sticking their little gnome hand into the flames—
 
 —and immediately retracts it, yelping in pain. "Ow!!"
 

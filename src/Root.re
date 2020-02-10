@@ -13,6 +13,7 @@ module Styles = {
       height(`percent(100.)),
       bottom(`px(0)),
       right(`px(0)),
+      transitionDuration(500),
       background(
         `linearGradient((
           `deg(90.),
@@ -53,12 +54,8 @@ let getInitialState: unit => GlobalState.t =
   () =>
     GlobalState.loadState()
     ->Belt.Option.getWithDefault({
+        ...GlobalState.defaultState,
         currentSceneId: InitialScene.Scene.id,
-        isShowingHelpDialog: false,
-        isShowingCharacterMenu: false,
-        anethirDamage: 0,
-        jazielDamage: 0,
-        stielettaDamage: 0,
       });
 
 [@react.component]

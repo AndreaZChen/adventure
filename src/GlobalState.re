@@ -6,7 +6,9 @@ type action =
   | CharacterMenuClosed
   | AnethirAddDamage(int)
   | JazielAddDamage(int)
-  | StielettaAddDamage(int);
+  | StielettaAddDamage(int)
+  | StielettaRecognizeEuporieFirst
+  | StielettaRemoveHairPins(int);
 
 type t = {
   currentSceneId: string,
@@ -15,6 +17,19 @@ type t = {
   anethirDamage: int,
   jazielDamage: int,
   stielettaDamage: int,
+  stielettaHairPins: int,
+  euporieFirstMeetingStielettaGoesFirst: bool,
+};
+
+let defaultState = {
+  currentSceneId: "",
+  isShowingHelpDialog: false,
+  isShowingCharacterMenu: false,
+  anethirDamage: 0,
+  jazielDamage: 0,
+  stielettaDamage: 0,
+  stielettaHairPins: 0,
+  euporieFirstMeetingStielettaGoesFirst: false,
 };
 
 let storeState: t => unit =
@@ -32,6 +47,16 @@ let storeState: t => unit =
       state.stielettaDamage->string_of_int,
       localStorage,
     );
+    setItem(
+      "stielettaHairPins",
+      state.stielettaHairPins->string_of_int,
+      localStorage,
+    );
+    setItem(
+      "euporieFirstMeetingStielettaGoesFirst",
+      state.euporieFirstMeetingStielettaGoesFirst->string_of_bool,
+      localStorage,
+    );
   };
 
 let loadState: unit => option(t) =
@@ -45,17 +70,27 @@ let loadState: unit => option(t) =
     let stielettaDamageOpt =
       getItem("stielettaDamage", localStorage)
       ->Belt.Option.map(int_of_string);
+    let stielettaHairPinsOpt =
+      getItem("stielettaHairPins", localStorage)
+      ->Belt.Option.map(int_of_string);
+    let euporieFirstMeetingStielettaGoesFirstOpt =
+      getItem("euporieFirstMeetingStielettaGoesFirst", localStorage)
+      ->Belt.Option.map(bool_of_string);
     switch (
       currentSceneIdOpt,
       anethirDamageOpt,
       jazielDamageOpt,
       stielettaDamageOpt,
+      stielettaHairPinsOpt,
+      euporieFirstMeetingStielettaGoesFirstOpt
     ) {
     | (
         Some(currentSceneId),
         Some(anethirDamage),
         Some(jazielDamage),
         Some(stielettaDamage),
+        Some(stielettaHairPins),
+        Some(euporieFirstMeetingStielettaGoesFirst),
       ) =>
       Some({
         currentSceneId,
@@ -64,6 +99,8 @@ let loadState: unit => option(t) =
         anethirDamage,
         jazielDamage,
         stielettaDamage,
+        stielettaHairPins,
+        euporieFirstMeetingStielettaGoesFirst,
       })
     | _ => None
     };
@@ -98,5 +135,15 @@ let reducer = (action: action, state: t) =>
     ReactUpdate.Update({
       ...state,
       stielettaDamage: state.stielettaDamage + damage,
+    })
+  | StielettaRecognizeEuporieFirst =>
+    ReactUpdate.Update({
+      ...state,
+      euporieFirstMeetingStielettaGoesFirst: true,
+    })
+  | StielettaRemoveHairPins(amount) =>
+    ReactUpdate.Update({
+      ...state,
+      stielettaHairPins: state.stielettaHairPins - amount,
     })
   };

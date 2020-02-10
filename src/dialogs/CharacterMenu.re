@@ -104,6 +104,10 @@ let make = (~globalState: GlobalState.t, ~onClose: unit => unit) => {
           {{js|Damage taken: |js}
            ++ string_of_int(globalState.stielettaDamage)}
         </Text>
+        <Text>
+          {{js|Hair pins left: |js}
+           ++ string_of_int(globalState.stielettaHairPins)}
+        </Text>
       </div>
     </div>
     <div className=CommonStyles.buttonsArea>
