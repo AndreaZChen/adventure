@@ -28,7 +28,7 @@ let defaultState = {
   anethirDamage: 0,
   jazielDamage: 0,
   stielettaDamage: 0,
-  stielettaHairPins: 0,
+  stielettaHairPins: 5,
   euporieFirstMeetingStielettaGoesFirst: false,
 };
 
@@ -82,7 +82,7 @@ let loadState: unit => option(t) =
       jazielDamageOpt,
       stielettaDamageOpt,
       stielettaHairPinsOpt,
-      euporieFirstMeetingStielettaGoesFirstOpt
+      euporieFirstMeetingStielettaGoesFirstOpt,
     ) {
     | (
         Some(currentSceneId),
@@ -144,6 +144,6 @@ let reducer = (action: action, state: t) =>
   | StielettaRemoveHairPins(amount) =>
     ReactUpdate.Update({
       ...state,
-      stielettaHairPins: state.stielettaHairPins - amount,
+      stielettaHairPins: max(state.stielettaHairPins - amount, 0),
     })
   };

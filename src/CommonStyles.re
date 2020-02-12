@@ -16,43 +16,53 @@ let dialogZIndex = 1000;
 
 let scrollbarWidth = 20;
 
-let buttonsArea = style([
-  width(`percent(100.)),
-  display(`flex),
-  flexWrap(`wrap),
-  justifyContent(`spaceAround),
-  alignItems(`center),
-  borderTop(`px(1), `solid, `hex(defaultBorderHex)),
-  paddingTop(`px(10)),
-  marginTop(`px(10)),
-]);
+let buttonsArea =
+  style([
+    width(`percent(100.)),
+    display(`flex),
+    flexWrap(`wrap),
+    justifyContent(`spaceAround),
+    alignItems(`center),
+    borderTop(`px(1), `solid, `hex(defaultBorderHex)),
+    paddingTop(`px(10)),
+    marginTop(`px(10)),
+  ]);
 
-global("button", [
-  cursor(`pointer),
-  margin(`px(10)),
-  paddingTop(`em(0.35)),
-  paddingBottom(`em(0.35)),
-  paddingLeft(`em(1.2)),
-  paddingRight(`em(1.2)),
-  border(`em(0.1), `solid, `hex(defaultBorderHex)),
-  backgroundColor(`hex(darkerBackgroundHex)),
-  borderRadius(`em(0.12)),
-  textAlign(`center),
-  transitionDuration(200),
-  hover([
-    backgroundColor(`hex(defaultBorderHex)),
-    color(`hex(defaultBackgroundHex)),
-  ]),
-]);
+global(
+  "button",
+  [
+    margin(`px(10)),
+    paddingTop(`em(0.35)),
+    paddingBottom(`em(0.35)),
+    paddingLeft(`em(1.2)),
+    paddingRight(`em(1.2)),
+    border(`em(0.1), `solid, `hex(defaultBorderHex)),
+    backgroundColor(`hex(darkerBackgroundHex)),
+    borderRadius(`em(0.12)),
+    textAlign(`center),
+    transitionDuration(200),
+    not_(
+      ":disabled",
+      [
+        cursor(`pointer),
+        hover([
+          backgroundColor(`hex(defaultBorderHex)),
+          color(`hex(defaultBackgroundHex)),
+        ]),
+      ],
+    ),
+  ],
+);
 
-global("hr", [
-  borderColor(`hex(defaultBorderHex)),
-  width(`percent(100.)),
-]);
+global(
+  "hr",
+  [borderColor(`hex(defaultBorderHex)), width(`percent(100.))],
+);
 
-global("body", [
-  unsafe("scrollbar-width", string_of_int(scrollbarWidth) ++ "px"),
-]);
+global(
+  "body",
+  [unsafe("scrollbar-width", string_of_int(scrollbarWidth) ++ "px")],
+);
 
 global(
   "::-webkit-scrollbar-track:vertical",

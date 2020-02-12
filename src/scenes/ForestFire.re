@@ -184,7 +184,7 @@ With a mad glint in their eye, Anethir runs towards the edge of the clearing, cl
              </>
            | Some(gotBurned) =>
              <>
-               <FadeInDiv key="initial" fadeInTime=2000>
+               <FadeInDiv key="anethirReaction" fadeInTime=2000>
                  {gotBurned
                     ? <>
                         <Text>
@@ -237,18 +237,20 @@ With a mad glint in their eye, Anethir runs towards the edge of the clearing, cl
          | [Stieletta]
          | [Stieletta, Anethir] =>
            <>
-             <FadeInDiv key="initial" fadeInTime=1000>
+             <FadeInDiv key="stielettaReaction1" fadeInTime=1000>
                <Text>
                  {js|The ominous voice grows even louder, its gleeful laughter reverberating throughout the clearing amidst the chaos and the fire.|js}
                </Text>
              </FadeInDiv>
-             <FadeInDiv key="initial" fadeInTime=2000 startFadeInAt=1000>
+             <FadeInDiv
+               key="stielettaReaction2" fadeInTime=2000 startFadeInAt=1000>
                <br />
                <Text>
                  {js|Suddenly, a grim expression dawns on Stieletta's face. Her knuckles whiten as she tightens her fists.|js}
                </Text>
              </FadeInDiv>
-             <FadeInDiv key="initial" fadeInTime=4000 startFadeInAt=2000>
+             <FadeInDiv
+               key="stielettaReaction3" fadeInTime=4000 startFadeInAt=2000>
                <br />
                <Text> {js|"I know that voice," she says coldly.|js} </Text>
              </FadeInDiv>
@@ -264,26 +266,29 @@ With a mad glint in their eye, Anethir runs towards the edge of the clearing, cl
          | [Jaziel]
          | [Jaziel, Anethir] =>
            <>
-             <FadeInDiv key="initial" fadeInTime=1000>
+             <FadeInDiv key="jazielReaction1" fadeInTime=1000>
                <Text>
                  {js|"Beg your pardon," Jaziel shouts into the trees, somehow managing to sound reservedly polite. "Might we inquire as to your identity, o mysterious arsonist?"
 
 The voice falls silent, and a hush falls over the clearing; even the roaring flames quieten a little.|js}
                </Text>
              </FadeInDiv>
-             <FadeInDiv key="initial" fadeInTime=4000 startFadeInAt=3000>
+             <FadeInDiv
+               key="jazielReaction2" fadeInTime=4000 startFadeInAt=3000>
                <br />
                <Text>
                  {js|Then, a small gap appears in the circle of fire. The flames part slightly, like curtains pulled aside on a theater stage...|js}
                </Text>
              </FadeInDiv>
-             <FadeInDiv key="initial" fadeInTime=7000 startFadeInAt=6000>
+             <FadeInDiv
+               key="jazielReaction3" fadeInTime=7000 startFadeInAt=6000>
                <br />
                <Text>
                  {js|... and they reveal the silhouette of a woman, leaning casually against a burning tree.|js}
                </Text>
              </FadeInDiv>
-             <FadeInDiv key="initial" fadeInTime=10000 startFadeInAt=9000>
+             <FadeInDiv
+               key="jazielReaction4" fadeInTime=10000 startFadeInAt=9000>
                <br />
                <Text> {js|"I thought you'd never ask," she says.|js} </Text>
              </FadeInDiv>
