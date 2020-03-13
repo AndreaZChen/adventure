@@ -8,9 +8,14 @@ module Scene: Interfaces.Scene = {
   type state = {
     charactersReactedSequence: list(Character.t),
     anethirBurned: option(bool),
+    stielettaGoesFirst: bool,
   };
 
-  let initialState = {charactersReactedSequence: [], anethirBurned: None};
+  let initialState = {
+    charactersReactedSequence: [],
+    anethirBurned: None,
+    stielettaGoesFirst: false,
+  };
 
   type action =
     | NextScene
@@ -36,7 +41,6 @@ module Scene: Interfaces.Scene = {
             Belt.List.add(state.charactersReactedSequence, Stieletta),
         },
         _self => {
-          globalDispatch(StielettaRecognizeEuporieFirst);
           scrollToTop();
           None;
         },
@@ -258,6 +262,54 @@ With a mad glint in their eye, Anethir runs towards the edge of the clearing, cl
                className=CommonStyles.buttonsArea
                fadeInTime=4500
                startFadeInAt=4000>
+               <button onClick={_ => localDispatch(ReactStieletta)}>
+                 {React.string("Next")}
+               </button>
+             </FadeInDiv>
+           </>
+         | [Stieletta, Stieletta]
+         | [Stieletta, Stieletta, Anethir] =>
+           <>
+             <FadeInDiv key="initial1" fadeInTime=2000>
+               <Text>
+                 {js|The circle of flame that ensnares the three adventurers begins to close in on them, as more and more of the clearing is swallowed by smoke and fire.
+
+"Terribly sorry," the mysterious voice gloats, "but this is the end for—"
+
+"Oh, enough!" Stieletta shouts. "I know it's you, |js}
+               </Text>
+               <Text npc=Euporie> "Euporie" </Text>
+               <Text> {js|!"|js} </Text>
+             </FadeInDiv>
+             <FadeInDiv key="initial2" fadeInTime=2500 startFadeInAt=2000>
+               <br />
+               <Text> {js|For a moment, nothing happens.|js} </Text>
+             </FadeInDiv>
+             <FadeInDiv key="initial3" fadeInTime=3000 startFadeInAt=2500>
+               <br />
+               <Text>
+                 {js|And then, in an instant, all of the raging fires disappear into puffs of ash, snuffed out like candles.|js}
+               </Text>
+             </FadeInDiv>
+             <FadeInDiv key="initial4" fadeInTime=3500 startFadeInAt=3000>
+               <br />
+               <Text>
+                 {{js|From the lingering smoke, a figure emerges.
+
+She is a tiefling woman, with wine-red skin, bright amber eyes, and smooth curved horns. She approaches them with long, regal strides in her leather boots; an ornate cape, dyed a deep navy color, flows behind her. |js}
+                  ++ {js|Everything about her, from her smartly tailored vest to the poise and elegance of her gait, exudes wealth and power.
+
+"Well, well!" she says, grinning. "If it isn't Goldilocks Stabbytoes, in all her glory!"|js}}
+               </Text>
+             </FadeInDiv>
+             <FadeInDiv key="initial5" fadeInTime=4000 startFadeInAt=3500>
+               <br />
+               <Text> {js|Stieletta grits her teeth.|js} </Text>
+             </FadeInDiv>
+             <FadeInDiv
+               className=CommonStyles.buttonsArea
+               fadeInTime=4000
+               startFadeInAt=3500>
                <button onClick={_ => localDispatch(NextScene)}>
                  {React.string("Next")}
                </button>
@@ -296,6 +348,57 @@ The voice falls silent, and a hush falls over the clearing; even the roaring fla
                className=CommonStyles.buttonsArea
                fadeInTime=15000
                startFadeInAt=9500>
+               <button onClick={_ => localDispatch(ReactJaziel)}>
+                 {React.string("Next")}
+               </button>
+             </FadeInDiv>
+           </>
+         | [Jaziel, Jaziel]
+         | [Jaziel, Jaziel, Anethir] =>
+           <>
+             <FadeInDiv key="initial1" fadeInTime=2000>
+               <Text>
+                 {{js|The wall of fire parts, the smoke clears, and there she is.
+
+Leaning against the base of a burning oak is a figure—a tiefling woman, judging by the wine-red skin and smooth curved horns. She rests one foot on the tree, her knee upraised,|js}
+                  ++ {js| while she twirls a charred twig absent-mindedly between her fingers. With the deep navy cape draped underneath her, and her relaxed |js}
+                  ++ {js|demeanour, the tiefling gives off a distinct air of comfort and ownership. The fire doesn't seem to affect her at all; her clothes and skin are completely untouched.
+
+Amber, almond-shaped eyes watch the trail of soot the twig makes as she spins it around—she's either bored and lost in thought, or pretending to be. She does not acknowledge the three adventurers with her gaze.
+
+"My name," she says, "is |js}}
+               </Text>
+               <Text npc=Euporie> "Euporie" </Text>
+               <Text>
+                 {js|."
+
+She finally looks up at them, a devilish smirk on her face. "And you, my unfortunate friends, are—wait a minute."|js}
+               </Text>
+             </FadeInDiv>
+             <FadeInDiv key="initial2" fadeInTime=2500 startFadeInAt=2000>
+               <br />
+               <Text>
+                 {js|She coughs, and suddenly her composure is completely lost. In an instant, the raging fires surrounding the clearing vanish into puffs of smoke, snuffed out like a candle.|js}
+               </Text>
+             </FadeInDiv>
+             <FadeInDiv key="initial3" fadeInTime=3000 startFadeInAt=2500>
+               <br />
+               <Text>
+                 {js|"Stieletta!? Knifeshoes Fancyfoot!?" she says.|js}
+               </Text>
+             </FadeInDiv>
+             <FadeInDiv key="initial4" fadeInTime=3500 startFadeInAt=3000>
+               <br />
+               <Text>
+                 {js|A bright grin spreads across her lips.
+
+Stieletta, too, seems shocked. Her jaw drops slightly, and her eyes fill with seething rage.|js}
+               </Text>
+             </FadeInDiv>
+             <FadeInDiv
+               className=CommonStyles.buttonsArea
+               fadeInTime=4000
+               startFadeInAt=3500>
                <button onClick={_ => localDispatch(NextScene)}>
                  {React.string("Next")}
                </button>

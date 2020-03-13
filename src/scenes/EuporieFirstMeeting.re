@@ -5,16 +5,12 @@ module Scene: Interfaces.Scene = {
 
   let backgroundColorHex = CommonStyles.euporieHex;
 
-  type state = {
-    introductionDone: bool,
-    charactersGreetedSequence: list(Character.t),
-  };
+  type state = {charactersGreetedSequence: list(Character.t)};
 
-  let initialState = {introductionDone: false, charactersGreetedSequence: []};
+  let initialState = {charactersGreetedSequence: []};
 
   type action =
     | NextScene
-    | IntroductionDone
     | GreetStieletta
     | GreetAnethir
     | GreetJaziel;
@@ -27,8 +23,6 @@ module Scene: Interfaces.Scene = {
         state: state,
       ) =>
     switch (action) {
-    | IntroductionDone =>
-      ReactUpdate.Update({...state, introductionDone: true})
     | GreetStieletta =>
       ReactUpdate.UpdateWithSideEffects(
         {
@@ -87,102 +81,6 @@ module Scene: Interfaces.Scene = {
 
       <>
         {switch (localState.charactersGreetedSequence) {
-         | [] when !localState.introductionDone =>
-           <>
-             {globalState.euporieFirstMeetingStielettaGoesFirst
-                ? <>
-                    <FadeInDiv key="initial1" fadeInTime=2000>
-                      <Text>
-                        {js|The circle of flame that ensnares the three adventurers begins to close in on them, as more and more of the clearing is swallowed by smoke and fire.
-
-"Terribly sorry," the mysterious voice gloats, "but this is the end for—"
-
-"Oh, enough!" Stieletta shouts. "I know it's you, |js}
-                      </Text>
-                      <Text npc=Euporie> "Euporie" </Text>
-                      <Text> {js|!"|js} </Text>
-                    </FadeInDiv>
-                    <FadeInDiv
-                      key="initial2" fadeInTime=2500 startFadeInAt=2000>
-                      <br />
-                      <Text> {js|For a moment, nothing happens.|js} </Text>
-                    </FadeInDiv>
-                    <FadeInDiv
-                      key="initial3" fadeInTime=3000 startFadeInAt=2500>
-                      <br />
-                      <Text>
-                        {js|And then, in an instant, all of the raging fires disappear into puffs of ash, snuffed out like candles.|js}
-                      </Text>
-                    </FadeInDiv>
-                    <FadeInDiv
-                      key="initial4" fadeInTime=3500 startFadeInAt=3000>
-                      <br />
-                      <Text>
-                        {{js|From the lingering smoke, a figure emerges.
-
-She is a tiefling woman, with wine-red skin, bright amber eyes, and smooth curved horns. She approaches them with long, regal strides in her leather boots; an ornate cape, dyed a deep navy color, flows behind her. |js}
-                         ++ {js|Everything about her, from her smartly tailored vest to the poise and elegance of her gait, exudes wealth and power.
-
-"Well, well!" she says, grinning. "If it isn't Goldilocks Stabbytoes, in all her glory!"|js}}
-                      </Text>
-                    </FadeInDiv>
-                    <FadeInDiv
-                      key="initial5" fadeInTime=4000 startFadeInAt=3500>
-                      <br />
-                      <Text> {js|Stieletta grits her teeth.|js} </Text>
-                    </FadeInDiv>
-                  </>
-                : <>
-                    <FadeInDiv key="initial1" fadeInTime=2000>
-                      <Text>
-                        {{js|The wall of fire parts, the smoke clears, and there she is.
-
-Leaning against the base of a burning oak is a figure—a tiefling woman, judging by the wine-red skin and smooth curved horns. She rests one foot on the tree, her knee upraised,|js}
-                         ++ {js| while she twirls a charred twig absent-mindedly between her fingers. With the deep navy cape draped underneath her, and her relaxed |js}
-                         ++ {js|demeanour, the tiefling gives off a distinct air of comfort and ownership. The fire doesn't seem to affect her at all; her clothes and skin are completely untouched.
-
-Amber, almond-shaped eyes watch the trail of soot the twig makes as she spins it around—she's either bored and lost in thought, or pretending to be. She does not acknowledge the three adventurers with her gaze.
-
-"My name," she says, "is |js}}
-                      </Text>
-                      <Text npc=Euporie> "Euporie" </Text>
-                      <Text>
-                        {js|."
-
-She finally looks up at them, a devilish smirk on her face. "And you, my unfortunate friends, are—wait a minute."|js}
-                      </Text>
-                    </FadeInDiv>
-                    <FadeInDiv
-                      key="initial2" fadeInTime=2500 startFadeInAt=2000>
-                      <br />
-                      <Text>
-                        {js|She coughs, and suddenly her composure is completely lost. In an instant, the raging fires surrounding the clearing vanish into puffs of smoke, snuffed out like a candle.|js}
-                      </Text>
-                    </FadeInDiv>
-                    <FadeInDiv
-                      key="initial3" fadeInTime=3000 startFadeInAt=2500>
-                      <br />
-                      <Text>
-                        {js|"Stieletta!? Knifeshoes Fancyfoot!?" she says.|js}
-                      </Text>
-                    </FadeInDiv>
-                    <FadeInDiv
-                      key="initial4" fadeInTime=3500 startFadeInAt=3000>
-                      <br />
-                      <Text>
-                        {js|A bright grin spreads across her lips.|js}
-                      </Text>
-                    </FadeInDiv>
-                  </>}
-             <FadeInDiv
-               className=CommonStyles.buttonsArea
-               fadeInTime=4000
-               startFadeInAt=3500>
-               <button onClick={_ => localDispatch(IntroductionDone)}>
-                 {React.string("Next")}
-               </button>
-             </FadeInDiv>
-           </>
          | [] =>
            <>
              <FadeInDiv key="noReactionYet" fadeInTime=2000>
